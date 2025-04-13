@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The War Beyond The Stars — Arcadia Lore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0A0B14;
+      --primary-color: #E8DDB5;
+      --accent-color: #e92570;
+      --secondary-accent: #2A3F7D;
+      --glow-color: rgba(233, 37, 112, 0.5);
+      --gradient-bg: linear-gradient(180deg, #0A0B14 0%, #1C2526 100%);
+      --transition-time: 0.5s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--gradient-bg);
+      color: #C9D1D9;
+      line-height: 1.8;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"%3E%3Cdefs%3E%3Cstyle%3E.star%7Bfill:%23ffffff;opacity:0.3;%7D.star2%7Bfill:%23e92570;opacity:0.5;%7D%3C/style%3E%3C/defs%3E%3Cg%3E%3Ccircle class="star" cx="100" cy="100" r="2"/%3E%3Ccircle class="star" cx="300" cy="200" r="1"/%3E%3Ccircle class="star2" cx="500" cy="300" r="3"/%3E%3Ccircle class="star" cx="700" cy="150" r="2"/%3E%3Ccircle class="star" cx="900" cy="400" r="1"/%3E%3Ccircle class="star2" cx="1100" cy="250" r="3"/%3E%3Ccircle class="star" cx="1300" cy="350" r="2"/%3E%3Ccircle class="star" cx="1500" cy="100" r="1"/%3E%3Ccircle class="star2" cx="1700" cy="200" r="3"/%3E%3C/g%3E%3C/svg%3E') repeat;
+      opacity: 0.15;
+      z-index: -1;
+      animation: drift 60s linear infinite;
+    }
+
+    @keyframes drift {
+      0% { background-position: 0 0; }
+      100% { background-position: 1920px 1080px; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10, 11, 20, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 1.2rem 0;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin: 0 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      position: relative;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    header {
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center/cover;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(10, 11, 20, 0.8), rgba(42, 63, 125, 0.4));
+      z-index: 1;
+    }
+
+    header h1, header h2 {
+      font-family: 'Orbitron', sans-serif;
+      position: relative;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      font-size: 6rem;
+      color: var(--primary-color);
+      text-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-color);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    header h2 {
+      font-size: 2.5rem;
+      color: var(--accent-color);
+      text-shadow: 0 0 10px var(--glow-color);
+      margin-top: 1rem;
+      animation: fadeIn 2s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 20px var(--glow-color), 0 0 40px var(--glow-color); }
+      50% { text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--glow-color); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .tabs {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: auto;
+      position: relative;
+    }
+
+    .tab-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      gap: 1rem;
+    }
+
+    .tab-button {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(233, 37, 112, 0.2);
+      color: var(--primary-color);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tab-button.active, .tab-button:hover {
+      background: var(--accent-color);
+      color: #0A0B14;
+      box-shadow: 0 0 20px var(--glow-color);
+      border-color: var(--accent-color);
+    }
+
+    .tab-content {
+      display: none;
+      background: rgba(10, 11, 20, 0.9);
+      padding: 2.5rem 2.5rem 2.5rem 3.5rem; /* Extra left padding for bar separation */
+      border-radius: 15px;
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.7);
+      animation: slideIn 0.7s ease forwards;
+      position: relative;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: var(--accent-color);
+      margin-bottom: 2rem;
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px var(--glow-color);
+    }
+
+    .tab-content h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin: 2rem 0 1rem;
+      padding-left: 1rem;
+      border-left: 4px solid var(--accent-color);
+      text-shadow: 0 0 5px var(--glow-color);
+    }
+
+    .tab-content p {
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 2;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      color: #DCE0E8;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .tab-content p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Progress Bar Styles */
+    .progress-bar {
+      position: absolute;
+      left: 8px; /* Moved slightly inward for separation */
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: rgba(233, 37, 112, 0.2);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .progress-fill {
+      position: absolute;
+      left: 0;
+      top: 0; /* Starts from top */
+      width: 100%;
+      height: 0; /* Starts empty */
+      background: var(--accent-color);
+      transition: height 0.3s ease;
+      box-shadow: 0 0 10px var(--glow-color);
+    }
+
+    .tab-content ul {
+      margin: 1.5rem 2rem;
+      list-style: none;
+    }
+
+    .tab-content li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .tab-content li::before {
+      content: '➤';
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-size: 1rem;
+      top: 0;
+    }
+
+    .tab-content li:hover {
+      color: var(--accent-color);
+      transform: translateX(10px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(10, 11, 20, 0.9);
+      color: var(--primary-color);
+      position: relative;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+    }
+
+    footer p {
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .social-links a {
+      color: var(--accent-color);
+      margin: 0 1rem;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      text-shadow: 0 0 10px var(--glow-color);
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 3.5rem;
+      }
+      header h2 {
+        font-size: 1.8rem;
+      }
+      .tab-button {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+      }
+      .tab-content h2 {
+        font-size: 2rem;
+      }
+      .tab-content p {
+        font-size: 1rem;
+      }
+      .tab-content {
+        padding: 2.5rem 2.5rem 2.5rem 3rem; /* Adjusted for mobile */
+      }
+      .progress-bar {
+        left: 6px; /* Slightly closer on mobile */
+        width: 3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#">Lore Principal</a>
+    <a href="#">Contos</a>
+    <a href="#">Personagens</a>
+  </nav>
+
+  <header id="mainHeader">
+    <h1>Arcadia</h1>
+    <h2>The War Beyond The Stars</h2>
+  </header>
+
+  <section class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="arcadia" aria-selected="true" role="tab">Arcadia</button>
+      <button class="tab-button" data-tab="cidadela" aria-selected="false" role="tab">A Cidadela</button>
+      <button class="tab-button" data-tab="governo" aria-selected="false" role="tab">Governo e Poder</button>
+      <button class="tab-button" data-tab="tecnologia" aria-selected="false" role="tab">Nível Tecnológico</button>
+      <button class="tab-button" data-tab="fauna" aria-selected="false" role="tab">Fauna e Ambiente</button>
+      <button class="tab-button" data-tab="nix" aria-selected="false" role="tab">Nix — Planeta Gêmeo</button>
+    </div>
+
+    <!-- Arcadia -->
+    <div class="tab-content active" id="arcadia">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>Arcadia</h2>
+      <p><strong>Arcadia</strong> é um planeta de contrastes extremos. Um berço tecnológico de ponta encravado em um mundo ainda selvagem, brutal e imprevisível.</p>
+      <p>Orbitando em harmonia tensa com seu planeta gêmeo, Nix, Arcadia é um símbolo de progresso racional e poder militar, erguido sobre uma terra que parece nunca ter esquecido sua origem mitológica.</p>
+
+      <h3>Localização no Sistema Helyos</h3>
+      <p><strong>Arcadia e Nix</strong> formam o "Díptico de Helyos", dois planetas interligados por fenômenos gravitacionais e energéticos inexplicáveis.</p>
+      <p>Enquanto Nix é mais espiritual, devoto de tradições e mitos antigos, Arcadia optou por caminhar rumo à tecnologia e ao controle absoluto da ordem. Essa dicotomia molda toda a tensão política e filosófica entre os dois mundos.</p>
+
+      <h3>Fundação da Cidadela</h3>
+      <p>A Cidadela de Arcadia foi erguida séculos após a primeira colonização do planeta. No início, Arcadia era considerado quase inabitável — sua superfície dominada por criaturas colossais e predadoras, mutações biológicas desconhecidas e eventos naturais catastróficos.</p>
+      <p>O avanço dos Arcadianos só foi possível após uma revolução energética ocorrida há gerações. Pouco se sabe sobre a real origem da tecnologia que sustenta o escudo protetor e alimenta a Cidadela — apenas que ela está enterrada profundamente abaixo da superfície, vigiada pelos setores mais secretos do governo.</p>
+      <p>A construção da Cidadela marcou o início da chamada Era de Ouro, quando Arcadia passou de colônia resistente a nação independente. Inicialmente pensada como uma fortaleza, a Cidadela se expandiu até se tornar o coração político, científico e social do planeta.</p>
+
+      <h3>Hostilidade Natural e Domínio Tecnológico</h3>
+      <p>Fora dos muros da Cidadela, Arcadia continua sendo um planeta selvagem e perigoso. Criaturas com aparência mitológica — muitas vezes de tamanhos colossais — habitam florestas densas, desertos elétricos e cordilheiras geladas. A maioria das expedições fora da Cidadela exige escolta militar ou drones autônomos.</p>
+      <p>Apesar disso, Arcadia nunca recuou. Com uma filosofia baseada em superar a natureza, não coexistir com ela, o planeta se adaptou por meio da dominação: robôs sentinelas, fortalezas avançadas em zonas remotas e pesquisas biotecnológicas para manipular a fauna local.</p>
+
+      <h3>Importância no Cenário Atual</h3>
+      <p>Hoje, Arcadia é vista como um modelo de avanço absoluto. Exporta tecnologia, estratégias militares e energia bruta.</p>
+      <p>Porém, sua influência não termina nas transações comerciais: muitos planetas já foram "auxiliados" por Arcadia em nome da reconstrução, estabilização ou progresso — palavras que soam nobres, mas frequentemente ocultam imposições políticas, ocupações veladas e a instalação de governos alinhados à sua doutrina.</p>
+      <p>A própria elite arcadiana gosta de dizer que estão “levando luz aos cantos esquecidos do sistema”. Mas fora de seus corredores dourados, muitos chamam isso por outro nome: ocupação disfarçada. Para alguns planetas, a chegada das forças arcadianas significa o fim do caos. Para outros… o fim da liberdade.</p>
+    </div>
+
+    <!-- A Cidadela -->
+    <div class="tab-content" id="cidadela">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>A Cidadela de Arcadia</h2>
+
+      <h3>Visão Geral</h3>
+      <p>A Cidadela é o coração palpitante de Arcadia — uma megacidade fortificada envolta por um escudo energético colossal, visível mesmo a quilômetros de distância. É aqui que vivem os altos escalões do governo, os principais cientistas, estrategistas militares e grande parte da classe média. Do alto de suas torres metálicas que cortam as nuvens, as luzes da Cidadela nunca se apagam, iluminando o céu com o brilho do progresso.</p>
+
+      <h3>Estrutura e Setores</h3>
+      <ul>
+        <li><strong>Setor Alfa:</strong> abriga os prédios governamentais, consulados de colônias aliadas, centros de comando militar e o Parlamento Central.</li>
+        <li><strong>Setor Beta:</strong> é voltado à pesquisa e inovação, onde estão localizadas universidades de ponta, laboratórios e megaindústrias de tecnologia.</li>
+        <li><strong>Setor Gama:</strong> concentra zonas residenciais da classe média e baixa, mercados e serviços civis.</li>
+        <li><strong>Setor Delta:</strong> serve como zona militar e base de lançamento de naves de patrulha planetária.</li>
+        <li><strong>Setor Externos:</strong> próximos ao limite do escudo, abrigam uma força de trabalho menos privilegiada, centros de contenção e locais de culto tolerados pelo Estado — sob vigilância.</li>
+      </ul>
+
+      <h3>O Escudo e a Energia</h3>
+      <p>A existência da Cidadela depende do Escudo: uma barreira energética que protege a cidade dos eventos naturais extremos do planeta e das ameaças biológicas que vagueiam pela superfície. O que o mantém ativo é um sistema de energia.</p>
+      <p>O avanço de Arcadia é frequentemente atribuído a uma revolução energética ocorrida há gerações. Pouco se sabe sobre a real origem da tecnologia que sustenta o Escudo e alimenta a Cidadela — apenas que ela está enterrada profundamente abaixo da superfície.</p>
+
+      <h3>Defesa e Controle</h3>
+      <p>A Cidadela é vigiada por drones armados, torres de plasma defensivas e um sistema de vigilância autônomo conhecido como <strong>Lux</strong>.</p>
+    </div>
+
+    <!-- Governo e Poder -->
+    <div class="tab-content" id="governo">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>Governo e Poder</h2>
+
+      <h3>República Tecnocrática</h3>
+      <p>Arcadia é, oficialmente, uma república tecnocrática. Na prática, funciona como uma oligarquia controlada por figuras que unem poder político, militar e científico. O ideal central é a estabilidade a qualquer custo.</p>
+
+      <h3>O Presidente</h3>
+      <p>No topo da pirâmide está <strong>Presidente Rassel Vonn</strong>, um estrategista carismático e calculista que personifica o ideal arcadiano de ordem e progresso. Com aparência austera e um olhar sempre distante, Rassel governa com mão firme, sustentado por décadas de confiança da elite.</p>
+      <p>Alguns o veem como o herói que salvou Arcadia da ruína ambiental e unificou as castas. Outros, como um tirano vestido de progresso. Seja qual for a verdade, uma coisa é certa: ninguém chega tão alto em Arcadia sem ser parte de algo maior.</p>
+
+      <h3>O Conselho Central</h3>
+      <p>Rassel Vonn não governa sozinho. Ele é cercado por um <strong>Conselho Central</strong> composto por dez cadeiras permanentes, cada uma representando um setor essencial da estrutura arcadiana: Guerra, Ciência, Energia, Vigilância, Diplomacia, e assim por diante.</p>
+      <p>Esses conselheiros são nomeados diretamente pelo Presidente e respondem somente a ele. Cada cadeira tem poder quase absoluto dentro de sua área — e são conhecidos mais por títulos do que por nomes. Por isso, figuras como o Ministro da Guerra, o Arquivista de Protocolo, ou o Regente de Energia se tornam quase mitológicas dentro da hierarquia do planeta.</p>
+
+      <h3>Círculos Internos</h3>
+      <p>Rumores falam de um círculo ainda mais restrito: uma casta de conselheiros invisíveis, figuras que nunca aparecem em transmissões públicas, mas cujas decisões moldam o destino do planeta.</p>
+      <p>Uns dizem que são sobreviventes das primeiras colônias. Outros, que são apenas um mito — um fantasma criado para justificar o inexplicável.</p>
+    </div>
+
+    <!-- Nível Tecnológico -->
+    <div class="tab-content" id="tecnologia">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>Nível Tecnológico</h2>
+
+      <h3>Infraestrutura e Implantes</h3>
+      <p>A tecnologia de Arcadia está entre as mais avançadas do universo. Cidades inteiras funcionam com infraestrutura automatizada: trens suspensos, drones civis, redes de dados integradas ao cotidiano, e implantes neurais que conectam cidadãos diretamente à Rede Estatal de Informação — conhecida como <strong>RAIZ</strong>.</p>
+
+      <h3>Medicina e Engenharia</h3>
+      <p>A medicina é capaz de reconstruir corpos, aprimorar sentidos e suprimir emoções indesejadas. A engenharia ambiental permite criar microclimas, e armas de pulso, exoesqueletos e blindagens modulares são comuns entre militares.</p>
+      <p>Poucos sabem, no entanto, o que se esconde por trás das tecnologias mais poderosas — apenas que algumas delas estão protegidas por patentes do governo e vetadas para uso civil, sob alegações de segurança nacional.</p>
+
+      <h3>Estilo de Vida</h3>
+      <p>A vida dentro da Cidadela depende diretamente da casta social. A elite vive em esferas aéreas, torres suspensas com jardins artificiais e luz solar controlada. A classe média ocupa os setores médios da cidade — zonas de produção, pesquisa, educação. Já as classes baixas vivem próximas aos limites do Escudo, em bairros cinzentos constantemente monitorados.</p>
+
+      <h3>Desigualdade e Conformidade</h3>
+      <p>A desigualdade em Arcadia não é um acidente — é parte do projeto. A hierarquia é apresentada como um reflexo da ordem natural, e a mobilidade social, embora possível, exige devoção total ao ideal arcadiano: sacrifício, progresso, disciplina.</p>
+      <p>Ainda assim, há beleza na cidade. Há arte — criada por IA, mas inspirada por Arcadianos. Há poesia nos silêncios dos corredores metálicos. E há esperança até mesmo nas zonas mais sombrias. Só que, em Arcadia, esperança é algo que se aprende a esconder.</p>
+    </div>
+
+    <!-- Fauna e Ambiente -->
+    <div class="tab-content" id="fauna">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>Fauna e Ambiente de Arcadia</h2>
+
+      <h3>Terreno Hostil e Clima Inconstante</h3>
+      <p>Arcadia não foi feita para ser habitada. Ela tolera a presença dos Arcadianos da mesma forma que uma fera tolera um espinho: com raiva contida. A Cidadela ergue-se como uma cicatriz na superfície do planeta, mas tudo além de seus muros permanece intocado, impenetrável, quase primitivo.</p>
+      <p>Montanhas negras que cortam o céu como punhais, florestas que emitem sons antes mesmo que o vento sopre, desertos que brilham em tons elétricos durante a noite. Arcadia pulsa, respira — e por vezes, ataca.</p>
+      <p>Há relatos de tempestades que surgem sem causa aparente, de neblinas que desorientam até sensores ópticos, e de áreas onde a gravidade parece… errática.</p>
+
+      <h3>Criaturas Mitológicas sem Mito</h3>
+      <p>A fauna de Arcadia é mais próxima de um pesadelo do que de uma ciência classificatória. Criaturas imensas, dotadas de bioluminescência, carapaças reflexivas ou múltiplos sistemas nervosos são comuns fora das zonas seguras.</p>
+      <p>Há registros de predadores que caçam usando calor emocional, de manadas inteiras que desaparecem em segundos ao serem observadas.</p>
+
+      <h3>Domínio Frágil</h3>
+      <p>Apesar de drones sentinelas, fortalezas avançadas e estações de contenção, Arcadia jamais foi domada por completo. Tropas de reconhecimento são enviadas rotineiramente — e muitas não retornam.</p>
+      <p>A fauna aprendeu a se adaptar às armas e, em certos casos, até a copiá-las. Alguns soldados juram que viram criaturas empunhando restos de armamento, como se experimentassem. O comando classifica isso como “alucinação por estresse”.</p>
+    </div>
+
+    <!-- Nix — Planeta Gêmeo -->
+    <div class="tab-content" id="nix">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+      <h2>Nix — O Planeta Gêmeo</h2>
+
+      <h3>Estrutura Social e Cultura</h3>
+      <p>Nix é tudo o que Arcadia não quer ser — ou tudo o que ela foi forçada a esquecer. Enquanto Arcadia construiu muralhas de metal e silenciou suas raízes mitológicas, Nix floresceu entre ruínas antigas.</p>
+      <p>Diferente da centralização extrema de Arcadia, Nix se organiza em conselhos regionais, compostos por líderes espirituais, estudiosos e militares em equilíbrio constante. O poder é descentralizado, mas não frágil. A fé, a tradição oral e o dever coletivo mantêm a ordem mais do que qualquer sistema de vigilância.</p>
+      <p>A população valoriza o passado como bússola para o futuro. Bibliotecas catedralinas, templos-vigília e academias filosóficas são comuns. O cidadão de Nix não busca eficiência — busca significado.</p>
+
+      <h3>Tecnologia e Tradição</h3>
+      <p>Embora menos avançada que Arcadia em termos industriais e bélicos, Nix mantém tecnologias misteriosas que não seguem os mesmos princípios que a ciência arcadiana. Alguns dizem que seus engenheiros utilizam padrões baseados em geometrias ancestrais. Outros juram que certos artefatos funcionam por intuição — ou fé.</p>
+      <p>Nixianos falam com reverência sobre "<strong>A HISTORIA</strong>", uma entidade, ciclo ou verdade que Arcadia abandonou. Não há consenso sobre o que isso significa, apenas que ela está voltando.</p>
+
+      <h3>Contraste e Conflito</h3>
+      <p>Para Arcadia, Nix é o passado encarnado — um obstáculo teimoso ao avanço racional. Para Nix, Arcadia é uma torre de aço construída sobre esqueletos esquecidos. O atrito entre as duas civilizações é mais do que político: é quase metafísico.</p>
+
+      <h3>Arcadia Vista de Nix</h3>
+      <p><em>“Eles acham que venceram a natureza. Mas só aprenderam a construir gaiolas mais bonitas.”</em><br>– Ditado comum entre pastores do Desfiladeiro Rilnar.</p>
+      <p><em>“Arcadia ergueu uma muralha contra os deuses. Por isso o céu deles parece tão vazio.”</em><br>– Verso do poema “Três Cidades e Um Silêncio”.</p>
+      <p><em>“Lá, até os sonhos têm que mostrar identidade.”</em><br>– Anônimo, refugiado nixiano no setor livre de Quarion.</p>
+      <p><em>“Arcadia esqueceu quem era. E A HISTORIA não perdoa quem apaga seu próprio nome.”</em><br>– Sacerdotisa-Keira, durante a celebração do Equinócio do Sombralume.</p>
+
+      <h3>Nix Segundo os Arcadianos</h3>
+      <p><em>“Enquanto nós dominamos as estrelas, eles rezam para elas.”</em><br>– Ministro da Prospecção, durante sessão pública no Senado Arcadiano.</p>
+      <p><em>“Nix rejeita o progresso. Preferem se ajoelhar diante de lendas do que caminhar rumo ao amanhã.”</em><br>– Manual de formação cívica da Cidadela.</p>
+      <p><em>“Os Nixianos vivem presos a superstições. Não dá pra negociar com gente que acredita em vozes do céu.”</em><br>– Comentário comum entre soldados de patrulha de fronteira orbital.</p>
+      <p><em>“Eles odeiam nossa liberdade porque a liberdade deles está enterrada em livros velhos.”</em><br>– Anúncio governamental durante a Semana da Ordem.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Arcadia Lore © 2025</p>
+    <div class="social-links">
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tab = button.dataset.tab;
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        button.classList.add('active');
+        button.setAttribute('aria-selected', 'true');
+        contents.forEach(content => {
+          content.classList.toggle('active', content.id === tab);
+        });
+        checkParagraphVisibility();
+        updateProgressBar();
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('mainHeader');
+      const scrollPos = window.scrollY;
+      header.style.opacity = scrollPos < 500 ? 1 - (scrollPos / 500) : 0;
+      checkParagraphVisibility();
+      updateProgressBar();
+    });
+
+    function checkParagraphVisibility() {
+      const paragraphs = document.querySelectorAll('.tab-content.active p');
+      const windowHeight = window.innerHeight;
+
+      paragraphs.forEach(p => {
+        const rect = p.getBoundingClientRect();
+        const isVisible = rect.top < windowHeight - 100 && rect.bottom > 0;
+        if (isVisible) {
+          p.classList.add('visible');
+        }
+      });
+    }
+
+    function updateProgressBar() {
+      const activeTab = document.querySelector('.tab-content.active');
+      if (!activeTab) return;
+
+      const progressFill = activeTab.querySelector('.progress-fill');
+      const tabRect = activeTab.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const tabHeight = activeTab.scrollHeight;
+      const scrollTop = window.scrollY;
+      const tabTop = tabRect.top + scrollTop;
+      const scrollDistance = scrollTop + windowHeight - tabTop;
+      const progress = Math.min(Math.max(scrollDistance / tabHeight, 0), 1);
+
+      progressFill.style.height = `${progress * 100}%`; // Fills from top down
+    }
+
+    window.addEventListener('load', () => {
+      checkParagraphVisibility();
+      updateProgressBar();
+    });
+  </script>
+</body>
+</html>
